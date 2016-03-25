@@ -1,5 +1,6 @@
 package cn.no7player.web;
 
+import cn.no7player.config.CommonConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class WebLogMonitor {
 
 	private Process process;
 	private InputStream inputStream;
-	
+
 	/**
 	 * 新的WebSocket请求开启
 	 */
@@ -27,14 +28,14 @@ public class WebLogMonitor {
 	public void onOpen(Session session) {
 		try {
 			// 执行tail -f命令
-			logger.info("Application initialized");
-			//TODO:修改为配置模式
-			process = Runtime.getRuntime().exec("tail -f /home/pomelo/install/apache-tomcat-8.0.32/logs/catalina.out");
+			logger.info(""+CommonConfig.getLogpath());
+			process = Runtime.getRuntime().exec("tail -f "+CommonConfig.getLogpath());
 			inputStream = process.getInputStream();
 			
-			// 一定要启动新的线程，防止InputStream阻塞处理WebSocket的线程
+			// 启动新的线程，防止InputStream阻塞处理WebSocket的线程
 			WebLogThread thread = new WebLogThread(inputStream, session);
 			thread.start();
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

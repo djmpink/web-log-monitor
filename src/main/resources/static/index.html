@@ -38,8 +38,8 @@
 <script>
 	$(document).ready(function() {
 		// 指定websocket路径
-		var websocket = new WebSocket('ws://djmpink.eicp.net:8081/webLogMonitor');
-//		var websocket = new WebSocket('ws://localhost:8081/webLogMonitor');
+//		var websocket = new WebSocket('ws://djmpink.eicp.net:8081/webLogMonitor');
+		var websocket = new WebSocket('ws://localhost:8081/webLogMonitor');
 		websocket.onmessage = function(event) {
 			// 接收服务端的实时日志并添加到HTML页面中
 			var data = "";
