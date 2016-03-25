@@ -3,16 +3,37 @@
 <head>
 <meta charset="utf-8">
 <title>tail log</title>
-<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
+<style>
+	body,pre{
+		margin: 0 auto;
+		padding:0;
+	}
+	body{
+		font-size:14px;
+	}
+	hr{
+		border:1px dashed #333;
+	}
+	/*.time{*/
+		/*color: #b1ff7b;*/
+		/*margin-top:20px;*/
+	/*}*/
+	#log-container{
+		width: 100%;
+		/*overflow-y: scroll;*/
+		background: #1f1f1f;
+		color: #c0c0c0;
+		min-height:100%;
+		/*margin-top:-20px;*/
+	}
+</style>
+
 </head>
 <body>
-
-
-	<div id="log-container" style=" overflow-y: scroll; background: #1f1f1f; color: #c0c0c0; padding: 10px;">
-		<div>
-		</div>
-	</div>
+<div id="log-container">
+</div>
 </body>
+<script src="//cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
 <script>
 	$(document).ready(function() {
 		// 指定websocket路径
@@ -20,21 +41,19 @@
 //		var websocket = new WebSocket('ws://localhost:8081//log');
 		websocket.onmessage = function(event) {
 			// 接收服务端的实时日志并添加到HTML页面中
-			$("#log-container div").append(event.data);
-			// 滚动条滚动到最低部
-			$("#log-container").scrollTop($("#log-container div").height() - $("#log-container").height());
-		};
-	});
+			var data = "";
+//			data += "<div class='time'>";
+//			data += new Date().toLocaleString();
+//			data += "</div><hr/>";
+			data += event.data.replace("\n","<br/>")+"<br/>";
 
-	var logWin;
-	window.onload=function()
-	{
-		var w=document.documentElement.clientWidth ;//可见区域宽度
-		var h=document.documentElement.clientHeight;//可见区域高度
-		logWin=document.getElementById('log-container');
-		logWin.style.width=w+"px";
-		logWin.style.height=h+"px";
-	}
+			$("#log-container").append(data);
+			// 滚动条滚动到最低部
+			$(window).scrollTop($("body").height());
+		};
+		//高度
+		$("#log-container").css("minHeight",$(window).height());
+	});
 </script>
 </body>
 </html>
