@@ -6,6 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
@@ -21,10 +22,12 @@ public class Application {
     public ServerEndpointExporter serverEndpointExporter() {
         return new ServerEndpointExporter();
     }
+
     @Bean
     public WebLogMonitor webLogMonitor() {
         return new WebLogMonitor();
     }
+
     public static void main(String[] args) throws Exception {
         logger.info("Application initialized");
         SpringApplication.run(Application.class, args);

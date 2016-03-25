@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>tail log</title>
+<title>日志监控</title>
 <style>
 	body,pre{
 		margin: 0 auto;
@@ -24,7 +24,8 @@
 		background: #1f1f1f;
 		color: #c0c0c0;
 		min-height:100%;
-		/*margin-top:-20px;*/
+		padding: 0 10px;
+		margin:5px;
 	}
 </style>
 
@@ -38,13 +39,10 @@
 	$(document).ready(function() {
 		// 指定websocket路径
 		var websocket = new WebSocket('ws://djmpink.eicp.net:8081/webLogMonitor');
-//		var websocket = new WebSocket('ws://localhost:8081//log');
+//		var websocket = new WebSocket('ws://localhost:8081/webLogMonitor');
 		websocket.onmessage = function(event) {
 			// 接收服务端的实时日志并添加到HTML页面中
 			var data = "";
-//			data += "<div class='time'>";
-//			data += new Date().toLocaleString();
-//			data += "</div><hr/>";
 			data += event.data.replace("\n","<br/>")+"<br/>";
 
 			$("#log-container").append(data);
